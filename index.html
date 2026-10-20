@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escape From School</title>
+  <meta name="description" content="Escape From School — jogo do projeto de Robótica do Fund 1. Por Felipe, Ana Elisa e Anabela." />
+  <style>
+    :root {
+      --bg: #0f1020;
+      --bg2: #1b1d3a;
+      --accent: #ffd166;
+      --accent2: #ef476f;
+      --text: #f4f4ff;
+      --muted: #a9aad0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, #2a2c5e 0%, transparent 55%),
+        radial-gradient(circle at 85% 80%, #40204a 0%, transparent 55%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+      overflow-x: hidden;
+    }
+
+    /* Corredor da escola ao fundo */
+    .corridor {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      perspective: 600px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .corridor::before,
+    .corridor::after {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background-image:
+        linear-gradient(rgba(255, 209, 102, 0.25) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 209, 102, 0.25) 1px, transparent 1px);
+      background-size: 80px 80px;
+      transform: rotateX(60deg);
+      animation: mover 12s linear infinite;
+    }
+
+    .corridor::after {
+      background-size: 160px 160px;
+      opacity: 0.5;
+      animation-duration: 18s;
+    }
+
+    @keyframes mover {
+      from { background-position: 0 0; }
+      to   { background-position: 0 80px; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(680px, 100%);
+      text-align: center;
+      padding: 48px 32px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(18, 19, 38, 0.72);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    .emoji {
+      font-size: 64px;
+      line-height: 1;
+      display: inline-block;
+      animation: flutuar 3s ease-in-out infinite;
+    }
+
+    @keyframes flutuar {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50%      { transform: translateY(-10px) rotate(4deg); }
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: clamp(2.1rem, 6vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(100deg, var(--accent), #ff9f68 45%, var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tagline {
+      margin-top: 14px;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(255, 209, 102, 0.1);
+      border: 1px solid rgba(255, 209, 102, 0.35);
+    }
+
+    .status .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.6);
+      animation: pulsar 1.8s infinite;
+    }
+
+    @keyframes pulsar {
+      70%  { box-shadow: 0 0 0 12px rgba(255, 209, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0); }
+    }
+
+    .autores {
+      margin-top: 34px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .autores strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="corridor" aria-hidden="true"></div>
+
+  <main class="card">
+    <span class="emoji" role="img" aria-label="Porta de saída">🚪</span>
+
+    <h1>Escape From School</h1>
+    <p class="tagline">O sinal bateu... agora é encontrar a saída antes que o portão feche!</p>
+
+    <div class="status">
+      <span class="dot" aria-hidden="true"></span>
+      Em construção
+    </div>
+
+    <p class="autores">
+      Projeto de Robótica — Fund 1<br />
+      <strong>Felipe &middot; Ana Elisa &middot; Anabela</strong>
+    </p>
+  </main>
+</body>
+</html>
