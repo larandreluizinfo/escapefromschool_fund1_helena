@@ -24,62 +24,61 @@
       padding: 24px;
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at 15% 15%, #2a2c5e 0%, transparent 55%),
-        radial-gradient(circle at 85% 80%, #40204a 0%, transparent 55%),
-        linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+      background: var(--bg);
       overflow-x: hidden;
     }
 
-    /* Corredor da escola ao fundo */
-    .corridor {
+    /* Desenho de fundo: escola vista de fora */
+    .cenario {
       position: fixed;
       inset: 0;
       z-index: 0;
-      perspective: 600px;
-      opacity: 0.35;
       pointer-events: none;
     }
 
-    .corridor::before,
-    .corridor::after {
-      content: "";
-      position: absolute;
-      inset: -50%;
-      background-image:
-        linear-gradient(rgba(255, 209, 102, 0.25) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 209, 102, 0.25) 1px, transparent 1px);
-      background-size: 80px 80px;
-      transform: rotateX(60deg);
-      animation: mover 12s linear infinite;
+    .cenario svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
-    .corridor::after {
-      background-size: 160px 160px;
-      opacity: 0.5;
-      animation-duration: 18s;
+    .nuvem {
+      animation: flutuarNuvem 18s ease-in-out infinite alternate;
     }
 
-    @keyframes mover {
-      from { background-position: 0 0; }
-      to   { background-position: 0 80px; }
+    .nuvem.lenta { animation-duration: 26s; }
+    .nuvem.rapida { animation-duration: 14s; }
+
+    @keyframes flutuarNuvem {
+      from { transform: translateX(-30px); }
+      to   { transform: translateX(30px); }
+    }
+
+    .bandeira {
+      transform-origin: 905px 250px;
+      animation: tremular 1.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes tremular {
+      from { transform: rotate(-4deg); }
+      to   { transform: rotate(4deg); }
     }
 
     .card {
       position: relative;
       z-index: 1;
-      width: min(680px, 100%);
+      width: min(620px, 100%);
       text-align: center;
-      padding: 48px 32px;
+      padding: 44px 32px 40px;
       border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(18, 19, 38, 0.72);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(18, 19, 38, 0.78);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
     }
 
     .emoji {
-      font-size: 64px;
+      font-size: 58px;
       line-height: 1;
       display: inline-block;
       animation: flutuar 3s ease-in-out infinite;
@@ -91,8 +90,8 @@
     }
 
     h1 {
-      margin-top: 18px;
-      font-size: clamp(2.1rem, 6vw, 3.4rem);
+      margin-top: 14px;
+      font-size: clamp(2rem, 6vw, 3.2rem);
       line-height: 1.05;
       letter-spacing: -0.02em;
       background: linear-gradient(100deg, var(--accent), #ff9f68 45%, var(--accent2));
@@ -107,39 +106,48 @@
       color: var(--muted);
     }
 
-    .status {
+    .botao-jogar {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 28px;
-      padding: 10px 18px;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+      padding: 16px 52px;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #231a05;
+      cursor: pointer;
+      border: none;
       border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-      background: rgba(255, 209, 102, 0.1);
-      border: 1px solid rgba(255, 209, 102, 0.35);
+      background: linear-gradient(180deg, #ffe08a, var(--accent) 55%, #f0b73e);
+      box-shadow: 0 10px 0 #b9852a, 0 18px 30px rgba(0, 0, 0, 0.45);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.2s ease;
     }
 
-    .status .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.6);
-      animation: pulsar 1.8s infinite;
+    .botao-jogar:hover {
+      filter: brightness(1.06);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 0 #b9852a, 0 22px 34px rgba(0, 0, 0, 0.5);
     }
 
-    @keyframes pulsar {
-      70%  { box-shadow: 0 0 0 12px rgba(255, 209, 102, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0); }
+    .botao-jogar:active {
+      transform: translateY(6px);
+      box-shadow: 0 4px 0 #b9852a, 0 10px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .botao-jogar:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 4px;
     }
 
     .autores {
-      margin-top: 34px;
-      padding-top: 22px;
+      margin-top: 30px;
+      padding-top: 20px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--muted);
     }
 
@@ -147,26 +155,305 @@
       color: var(--text);
       font-weight: 600;
     }
+
+    /* Aviso ao clicar em jogar (o jogo ainda está sendo construído) */
+    .aviso {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(6, 7, 18, 0.72);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .aviso.aberto {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .aviso-caixa {
+      width: min(420px, 100%);
+      padding: 34px 28px;
+      text-align: center;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 209, 102, 0.35);
+      background: #191b33;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      transform: translateY(12px) scale(0.97);
+      transition: transform 0.25s ease;
+    }
+
+    .aviso.aberto .aviso-caixa {
+      transform: translateY(0) scale(1);
+    }
+
+    .aviso-caixa h2 {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .aviso-caixa p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .botao-voltar {
+      margin-top: 22px;
+      padding: 12px 30px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .botao-voltar:hover { background: rgba(255, 255, 255, 0.1); }
+
+    @media (max-width: 480px) {
+      .card { padding: 34px 22px 30px; }
+      .botao-jogar { padding: 14px 40px; font-size: 1.1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+    }
   </style>
 </head>
 <body>
-  <div class="corridor" aria-hidden="true"></div>
+  <!-- Desenho de fundo da escola -->
+  <div class="cenario" aria-hidden="true">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6a5acd" />
+          <stop offset="45%" stop-color="#8f7bd8" />
+          <stop offset="75%" stop-color="#f39c6b" />
+          <stop offset="100%" stop-color="#ffcf87" />
+        </linearGradient>
+        <linearGradient id="grama" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3d7a4f" />
+          <stop offset="100%" stop-color="#23502f" />
+        </linearGradient>
+        <linearGradient id="parede" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f3d9b1" />
+          <stop offset="100%" stop-color="#d9b384" />
+        </linearGradient>
+        <linearGradient id="telhado" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a84b3c" />
+          <stop offset="100%" stop-color="#7d3327" />
+        </linearGradient>
+        <linearGradient id="janela" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffe9a8" />
+          <stop offset="100%" stop-color="#f5b942" />
+        </linearGradient>
+        <radialGradient id="sol" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff2b0" />
+          <stop offset="60%" stop-color="#ffd166" />
+          <stop offset="100%" stop-color="#ffd166" stop-opacity="0" />
+        </radialGradient>
+      </defs>
 
+      <!-- Céu -->
+      <rect width="1200" height="800" fill="url(#ceu)" />
+
+      <!-- Sol -->
+      <circle cx="1000" cy="150" r="150" fill="url(#sol)" opacity="0.6" />
+      <circle cx="1000" cy="150" r="58" fill="#ffe08a" />
+
+      <!-- Nuvens -->
+      <g fill="#ffffff" opacity="0.8">
+        <g class="nuvem">
+          <ellipse cx="230" cy="140" rx="70" ry="30" />
+          <ellipse cx="190" cy="150" rx="45" ry="24" />
+          <ellipse cx="275" cy="152" rx="48" ry="26" />
+        </g>
+        <g class="nuvem lenta" opacity="0.7">
+          <ellipse cx="760" cy="100" rx="60" ry="26" />
+          <ellipse cx="720" cy="110" rx="40" ry="20" />
+          <ellipse cx="800" cy="112" rx="42" ry="22" />
+        </g>
+        <g class="nuvem rapida" opacity="0.6">
+          <ellipse cx="470" cy="200" rx="48" ry="20" />
+          <ellipse cx="440" cy="208" rx="32" ry="16" />
+          <ellipse cx="505" cy="210" rx="34" ry="17" />
+        </g>
+      </g>
+
+      <!-- Pássaros -->
+      <g stroke="#3a3560" stroke-width="3" fill="none" opacity="0.6" stroke-linecap="round">
+        <path d="M340 250 q12 -12 24 0 q12 -12 24 0" />
+        <path d="M610 190 q10 -10 20 0 q10 -10 20 0" />
+      </g>
+
+      <!-- Colinas ao fundo -->
+      <path d="M0 520 Q200 440 400 500 T800 490 T1200 520 L1200 620 L0 620 Z" fill="#2f5c3f" opacity="0.7" />
+
+      <!-- Chão / gramado -->
+      <rect y="560" width="1200" height="240" fill="url(#grama)" />
+
+      <!-- Caminho até a porta -->
+      <path d="M560 800 L640 800 L625 640 L575 640 Z" fill="#c9b48c" opacity="0.9" />
+      <path d="M560 800 L640 800 L625 640 L575 640 Z" fill="none" stroke="#a8916a" stroke-width="4" opacity="0.6" />
+
+      <!-- Escola: prédio principal -->
+      <rect x="380" y="300" width="440" height="290" fill="url(#parede)" stroke="#b0885a" stroke-width="3" />
+      <rect x="380" y="300" width="440" height="290" fill="none" stroke="#00000018" stroke-width="30" />
+
+      <!-- Telhado -->
+      <polygon points="355,300 600,200 845,300" fill="url(#telhado)" />
+      <polygon points="355,300 600,200 845,300" fill="#00000012" />
+      <rect x="355" y="296" width="490" height="14" rx="4" fill="#5e261d" />
+
+      <!-- Torre do relógio -->
+      <rect x="565" y="180" width="70" height="60" fill="#e3c193" stroke="#b0885a" stroke-width="3" />
+      <polygon points="555,180 600,145 645,180" fill="#8b3a2c" />
+      <circle cx="600" cy="208" r="20" fill="#fff7e0" stroke="#8b3a2c" stroke-width="3" />
+      <line x1="600" y1="208" x2="600" y2="196" stroke="#5a3a1a" stroke-width="3" stroke-linecap="round" />
+      <line x1="600" y1="208" x2="609" y2="212" stroke="#5a3a1a" stroke-width="3" stroke-linecap="round" />
+
+      <!-- Bandeira -->
+      <rect x="903" y="230" width="4" height="120" fill="#7a6a55" />
+      <g class="bandeira">
+        <polygon points="907,235 960,250 907,265" fill="#ef476f" />
+      </g>
+
+      <!-- Janelas do andar de cima -->
+      <g>
+        <rect x="415" y="335" width="70" height="60" rx="4" fill="url(#janela)" stroke="#8b5e34" stroke-width="4" />
+        <rect x="510" y="335" width="70" height="60" rx="4" fill="url(#janela)" stroke="#8b5e34" stroke-width="4" />
+        <rect x="620" y="335" width="70" height="60" rx="4" fill="url(#janela)" stroke="#8b5e34" stroke-width="4" />
+        <rect x="715" y="335" width="70" height="60" rx="4" fill="url(#janela)" stroke="#8b5e34" stroke-width="4" />
+        <!-- Grades das janelas -->
+        <g stroke="#8b5e34" stroke-width="3">
+          <line x1="450" y1="335" x2="450" y2="395" />
+          <line x1="545" y1="335" x2="545" y2="395" />
+          <line x1="655" y1="335" x2="655" y2="395" />
+          <line x1="750" y1="335" x2="750" y2="395" />
+        </g>
+      </g>
+
+      <!-- Janelas do andar de baixo -->
+      <g>
+        <rect x="415" y="435" width="70" height="62" rx="4" fill="url(#janela)" stroke="#8b5e34" stroke-width="4" />
+        <rect x="715" y="435" width="70" height="62" rx="4" fill="url(#janela)" stroke="#8b5e34" stroke-width="4" />
+        <g stroke="#8b5e34" stroke-width="3">
+          <line x1="450" y1="435" x2="450" y2="497" />
+          <line x1="750" y1="435" x2="750" y2="497" />
+        </g>
+      </g>
+
+      <!-- Porta de entrada -->
+      <rect x="548" y="455" width="104" height="135" rx="6" fill="#6b4226" stroke="#4a2c17" stroke-width="4" />
+      <rect x="561" y="468" width="78" height="52" rx="4" fill="#9fd3e0" stroke="#4a2c17" stroke-width="3" />
+      <line x1="600" y1="468" x2="600" y2="520" stroke="#4a2c17" stroke-width="3" />
+      <circle cx="640" cy="545" r="5" fill="#ffd166" />
+      <!-- Degraus -->
+      <rect x="530" y="590" width="140" height="12" rx="3" fill="#b8a17b" />
+      <rect x="518" y="602" width="164" height="12" rx="3" fill="#a8916a" />
+
+      <!-- Placa com o nome da escola -->
+      <rect x="520" y="402" width="160" height="34" rx="6" fill="#f4f4ff" stroke="#8b5e34" stroke-width="3" />
+      <text x="600" y="425" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="18" font-weight="700" fill="#3d3d5c">ESCOLA</text>
+
+      <!-- Árvores -->
+      <g>
+        <rect x="262" y="500" width="16" height="90" fill="#6b4a2a" />
+        <circle cx="270" cy="480" r="52" fill="#2e7d4f" />
+        <circle cx="235" cy="505" r="38" fill="#3a8f5c" />
+        <circle cx="305" cy="505" r="38" fill="#3a8f5c" />
+      </g>
+      <g>
+        <rect x="918" y="510" width="14" height="80" fill="#6b4a2a" />
+        <circle cx="925" cy="492" r="46" fill="#2e7d4f" />
+        <circle cx="895" cy="515" r="32" fill="#3a8f5c" />
+        <circle cx="957" cy="515" r="32" fill="#3a8f5c" />
+      </g>
+
+      <!-- Arbustos em frente -->
+      <g fill="#2f7a4c">
+        <ellipse cx="430" cy="600" rx="34" ry="20" />
+        <ellipse cx="470" cy="606" rx="26" ry="16" />
+        <ellipse cx="760" cy="602" rx="32" ry="19" />
+        <ellipse cx="798" cy="608" rx="24" ry="15" />
+      </g>
+
+      <!-- Cerca lateral -->
+      <g stroke="#d9d0bd" stroke-width="6" stroke-linecap="round">
+        <line x1="80" y1="610" x2="80" y2="680" />
+        <line x1="130" y1="610" x2="130" y2="680" />
+        <line x1="180" y1="610" x2="180" y2="680" />
+        <line x1="230" y1="610" x2="230" y2="680" />
+        <line x1="60" y1="638" x2="245" y2="638" />
+        <line x1="60" y1="662" x2="245" y2="662" />
+        <line x1="960" y1="610" x2="960" y2="680" />
+        <line x1="1010" y1="610" x2="1010" y2="680" />
+        <line x1="1060" y1="610" x2="1060" y2="680" />
+        <line x1="1110" y1="610" x2="1110" y2="680" />
+        <line x1="940" y1="638" x2="1125" y2="638" />
+        <line x1="940" y1="662" x2="1125" y2="662" />
+      </g>
+
+      <!-- Vinheta para dar destaque ao cartão -->
+      <rect width="1200" height="800" fill="#0b0c1c" opacity="0.28" />
+    </svg>
+  </div>
+
+  <!-- Tela inicial -->
   <main class="card">
     <span class="emoji" role="img" aria-label="Porta de saída">🚪</span>
 
     <h1>Escape From School</h1>
     <p class="tagline">O sinal bateu... agora é encontrar a saída antes que o portão feche!</p>
 
-    <div class="status">
-      <span class="dot" aria-hidden="true"></span>
-      Em construção
-    </div>
+    <button type="button" class="botao-jogar" id="botaoJogar">▶ Jogar</button>
 
     <p class="autores">
       Projeto de Robótica — Fund 1<br />
       <strong>Felipe &middot; Ana Elisa &middot; Anabela</strong>
     </p>
   </main>
+
+  <!-- Aviso exibido ao clicar em Jogar -->
+  <div class="aviso" id="aviso" role="dialog" aria-modal="true" aria-labelledby="tituloAviso">
+    <div class="aviso-caixa">
+      <h2 id="tituloAviso">Em construção</h2>
+      <p>A escola já está desenhada, mas o jogo ainda está sendo criado. Volte em breve!</p>
+      <button type="button" class="botao-voltar" id="botaoVoltar">Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    const botaoJogar = document.getElementById("botaoJogar");
+    const botaoVoltar = document.getElementById("botaoVoltar");
+    const aviso = document.getElementById("aviso");
+
+    botaoJogar.addEventListener("click", () => {
+      aviso.classList.add("aberto");
+      botaoVoltar.focus();
+    });
+
+    botaoVoltar.addEventListener("click", () => {
+      aviso.classList.remove("aberto");
+      botaoJogar.focus();
+    });
+
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && aviso.classList.contains("aberto")) {
+        aviso.classList.remove("aberto");
+        botaoJogar.focus();
+      }
+    });
+  </script>
 </body>
 </html>
